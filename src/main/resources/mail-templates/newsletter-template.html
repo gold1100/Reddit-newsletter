@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Hello,</h1>
+<p th:text="#{greetings}"></p>
+<br>
+<div>
+    <th:block th:each="post: ${posts}">
+        <table style="border-bottom: solid; table-layout: fixed; width: 75%;">
+            <td>
+                <p th:text="${post.title}" style="font-weight: bold; font-size: 20px; text-align:center";></p>
+                <p th:text="${post.text}"></p>
+                <p style="font-weight: bold; font-size: 20px;">Full post  <a th:href="${post.url}">here</a> </p>
+            </td>
+        </table>
+
+    </th:block>
+</div>
+
+</body>
+</html>
