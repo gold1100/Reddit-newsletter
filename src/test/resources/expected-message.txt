@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>testProperty</p>
+<p>testProperty2</p>
+<p>value0</p>
+<p>value1</p>
+
+</body>
+</html>

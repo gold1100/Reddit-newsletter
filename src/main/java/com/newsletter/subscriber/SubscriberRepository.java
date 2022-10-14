@@ -8,6 +8,4 @@ public interface SubscriberRepository extends MongoRepository<Subscriber, String
 
      Subscriber findByEmail(String email);
      boolean existsSubscriberByEmail(String email);
-
-
 }

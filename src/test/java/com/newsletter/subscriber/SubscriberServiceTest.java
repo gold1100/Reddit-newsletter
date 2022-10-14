@@ -1,12 +1,11 @@
 package com.newsletter.subscriber;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -20,37 +19,35 @@ class SubscriberServiceTest {
 
     @Mock
     SubscriberRepository subscriberRepository;
+    @InjectMocks
     SubscriberService underTest;
-    AutoCloseable closeable;
 
     @BeforeEach
     void setUp(){
-        closeable = MockitoAnnotations.openMocks(this);
-        underTest = new SubscriberService(subscriberRepository);
+        MockitoAnnotations.openMocks(this);
     }
 
-    @AfterEach
-    void tearDown() throws Exception {
-        closeable.close();
+    @Test
+    void itShouldGetAllSubscribers(){
+        //when
+        underTest.getSubscriberList();
+        //then
+        verify(subscriberRepository).findAll();
     }
-
-
 
     @Test
     void itShouldAddSubscriber(){
         //given
         Subscriber subscriber = new Subscriber("kowal.kowalski@gmail.com");
         //when
-        ResponseEntity<String> tested = underTest.addSubscriber(subscriber);
-
+        Subscriber tested = underTest.addSubscriber(subscriber);
         //then
         verify(subscriberRepository).save(subscriber);
-        assertEquals(tested, ResponseEntity.status(HttpStatus.CREATED).body("Email successfully added to subscription list"));
 
     }
 
     @Test
-    void itShouldThrowBadRequestException(){
+    void itShouldThrowBadRequestExceptionWhenIncorrectEmail(){
         //given
         Subscriber subscriber0 = new Subscriber("kowalkowalskigmail.com");
         Subscriber subscriber1 = new Subscriber("@gmail.com");
@@ -74,11 +71,12 @@ class SubscriberServiceTest {
         });
     }
     @Test
-    void itShouldThrowConflictException(){
+    void itShouldThrowConflictExceptionWhenSubscriberExistsInDbAlready(){
         //given
         Subscriber subscriber = new Subscriber("kowalkowalski@gmail.com");
-        when(subscriberRepository.existsSubscriberByEmail(subscriber.getEmail())).thenReturn(true);
+
         //when
+        when(subscriberRepository.existsSubscriberByEmail(subscriber.getEmail())).thenReturn(true);
         ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> underTest.addSubscriber(subscriber));
 
         // then
@@ -90,25 +88,24 @@ class SubscriberServiceTest {
 
     }
 
-
     @Test
     void itShouldDeleteSubscriber(){
         //given
-        Subscriber subscriber = new Subscriber("kowal.kowalski@gmail.com");
-        when(subscriberRepository.existsSubscriberByEmail(subscriber.getEmail())).thenReturn(true);
+        Subscriber subscriber = new Subscriber("testId","emailTest@gmail.com");
+
         //when
-        ResponseEntity<String> tested = underTest.deleteSubscriber(subscriber);
+        when(subscriberRepository.existsById(subscriber.getId())).thenReturn(true);
+        underTest.deleteSubscriber("testId");
         //then
-        verify(subscriberRepository).delete(subscriber);
-        assertEquals(tested, ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully unsubscribed"));
+        verify(subscriberRepository).deleteById("testId");
     }
 
     @Test
-    void itShouldThrowNotFoundException(){
+    void itShouldThrowNotFoundExceptionWhenSubscriberIsntInDb(){
         //given
-        Subscriber subscriber = new Subscriber("kowal.kowalski@gmail.com");
+        Subscriber subscriber = new Subscriber("testId" ,"kowal.kowalski@gmail.com");
         //when
-        ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> underTest.deleteSubscriber(subscriber));
+        ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> underTest.deleteSubscriber("testId"));
         //then
         assertEquals(HttpStatus.NOT_FOUND, thrown.getStatus());
         assertEquals("404 NOT_FOUND \"This email is not on subscription list\"", thrown.getMessage());

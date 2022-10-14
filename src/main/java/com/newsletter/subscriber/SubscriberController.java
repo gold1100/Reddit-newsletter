@@ -1,29 +1,34 @@
 package com.newsletter.subscriber;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+import java.util.List;
+
+
 @RestController
 @RequestMapping(path = "api/v1/subscriber")
 public class SubscriberController {
 
-    SubscriberService subscriberService;
+    private final SubscriberService subscriberService;
 
-    @Autowired
+
     public SubscriberController(SubscriberService subscriberService) {
         this.subscriberService = subscriberService;
     }
 
-    @PostMapping(path = "/add")
-    public ResponseEntity<String> addSubscriber(@RequestBody Subscriber subscriber){
+    @GetMapping
+    public List<Subscriber> getSubscriberList(){
+        return subscriberService.getSubscriberList();
+    }
+
+    @PostMapping
+    public Subscriber addSubscriber(@RequestBody Subscriber subscriber){
         return subscriberService.addSubscriber(subscriber);
     }
 
-    @DeleteMapping(path = "/delete")
-    public ResponseEntity<String> deleteSubscriber(@RequestBody Subscriber subscriber){
-        return subscriberService.deleteSubscriber(subscriber);
+    @DeleteMapping(path="/{id}")
+    public void deleteSubscriber(@PathVariable String id){
+        subscriberService.deleteSubscriber(id);
     }
 }

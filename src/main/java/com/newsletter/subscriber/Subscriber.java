@@ -24,9 +24,9 @@ public class Subscriber {
         this.email = email;
     }
 
-    public Subscriber(String email, LocalDate joinDate) {
+    public Subscriber(String id, String email) {
+        this.id = id;
         this.email = email;
-        this.joinDate = joinDate;
     }
 
     public String getEmail() {
@@ -50,6 +50,15 @@ public class Subscriber {
     }
 
     @Override
+    public String toString() {
+        return "Subscriber{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", joinDate=" + joinDate +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -59,6 +68,6 @@ public class Subscriber {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmail());
+        return Objects.hash(getId(), getEmail(), getJoinDate());
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -26,7 +24,7 @@ class SubscriberRepositoryTest {
     @Test
     void itShouldFindByEmail() {
         // given
-        Subscriber subscriber = new Subscriber("testemail@gmail.org", LocalDate.now());
+        Subscriber subscriber = new Subscriber("testemail@gmail.org");
         underTest.save(subscriber);
 
         // when
