@@ -1,18 +1,19 @@
-
 <h2 align="center">
-	Reddit newsletter
- </h2>
- <p>
- Tech stack: Java, Spring Boot, MongoDB, Thymeleaf, JUnit
-</p>
- <p>
- Email based newsletter app made for learning purposes.
- </p>
-<br>
-<h3 align="center">
-What it does?
-</h3>
+    Reddit Newsletter
+</h2>
+
 <p>
-Reddit newsletter fetches posts data from public reddit API and sends out daily emails to all subscribed email adresses.
+    **Tech Stack**: Java, Spring Boot, MongoDB, Thymeleaf, JUnit
 </p>
-<br>
+
+<p>
+    This project is an email-based newsletter application developed for educational purposes. It utilizes a tech stack consisting of Java, Spring Boot, MongoDB, Thymeleaf, and JUnit for testing.
+</p>
+
+<h3 align="center">
+    What Does It Do?
+</h3>
+
+<p>
+    Reddit Newsletter retrieves post data from the public Reddit API and sends out daily emails to all subscribed email addresses.
+</p>
