@@ -3,7 +3,7 @@
 </h2>
 
 <p>
-    **Tech Stack**: Java, Spring Boot, MongoDB, Thymeleaf, JUnit
+    <strong>Tech Stack</strong>: Java, Spring Boot, MongoDB, Thymeleaf, JUnit
 </p>
 
 <p>
